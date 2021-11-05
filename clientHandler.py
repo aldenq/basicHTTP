@@ -1,11 +1,13 @@
-import basicHTTP.HTTPparser
+import basicHTTP.HTTPparser,time
 class HTTPClient():
 
-    def __init__(self,socket) -> None:
+    def __init__(self,socket,addr) -> None:
+
+        self.start = time.time()
         self.socket = socket
         self.raw = ""
         self.HTTP = None
-
+        self.addr = addr
 
         while True:
             data = self.socket.recv(1).decode("utf-8")
@@ -17,6 +19,8 @@ class HTTPClient():
             
         
         self.HTTP = basicHTTP.HTTPparser.HTTPReq(self.raw)
+        if "Content-Length" in self.HTTP.headers:
+            self.HTTP.body = self.socket.recv(int(self.HTTP.headers["Content-Length"])).decode("utf-8")
 
 
 
@@ -30,4 +34,4 @@ class HTTPClient():
     def send(self,data):
         self.socket.send(data)
         self.socket.close()
-
+        # print(f"time to handle: {time.time()-self.start}")

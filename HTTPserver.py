@@ -24,7 +24,7 @@ class HTTPServer():
 
 
         if conn:
-            client = basicHTTP.clientHandler.HTTPClient(conn)
+            client = basicHTTP.clientHandler.HTTPClient(conn,addr)
             if self.clientHandler:
                 self.clientHandler(client)
 
