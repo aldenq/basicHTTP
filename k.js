@@ -7,7 +7,7 @@
 
 
 window.alert("xss");
-phoneHome("hello");
+httpReq();
 
 var doc = ""
 
